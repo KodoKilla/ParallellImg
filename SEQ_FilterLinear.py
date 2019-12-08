@@ -1,6 +1,6 @@
 """
-@file filter2D.py
-@brief Sample code that shows how to implement your own linear filters by using filter2D function
+Baseado no exemplo do website oficial do OpenCV
+
 """
 import sys
 import cv2 as cv

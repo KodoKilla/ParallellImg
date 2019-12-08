@@ -1,39 +1,30 @@
-"""
-@file filter2D.py
-@brief Sample code that shows how to implement your own linear filters by using filter2D function
-"""
-import sys
-import cv2 as cv
-import numpy as np
+import cv2
+from mpi4py import MPI
+import time
 
+def main(imgsrc, nProcesso):
+    tini = time.time()
+    img = cv2.imread(imgsrc, 0)
 
-def main(argv):
-    window_name = 'Filtro Linear'
+    if (nProcesso == 0):
+        tipo = "Reverso"
+        res = cv2.bitwise_not(img)
+        tfim = time.time() - tini
+        print("Tempo de Processamento: ", tfim)
+    if (nProcesso == 1):
+        tipo = "Resize"
+        res = cv2.resize(img, (600, 650))
+        tfim = time.time() - tini
+        print("Tempo de Processamento: ", tfim)
+    if (nProcesso == 2):
+        tipo = "Gaussiano"
+        res = cv2.GaussianBlur(img, (5, 5), 0)
+        tfim = time.time() - tini
+        print("Tempo de Processamento: ", tfim)
+    if (nProcesso == 3):
+        tipo = "Média"
+        res = cv2.medianBlur(img, 5)
+        tfim = time.time() - tini
+        print("Tempo de Processamento: ", tfim)
 
-    imageName = argv
-    # Loads an image
-    src = cv.imread(imageName, cv.IMREAD_COLOR)
-    # Check if image is loaded fine
-    if src is None:
-        print('Error opening image!')
-        print('Usage: filter2D.py [image_name -- default lena.jpg] \n')
-        return -1
-
-    ddepth = -1
-
-    ind = 0
-    while True:
-
-        kernel_size = 3 + 2 * (ind % 5)
-        kernel = np.ones((kernel_size, kernel_size), dtype=np.float32)
-        kernel /= (kernel_size * kernel_size)
-
-        dst = cv.filter2D(src, ddepth, kernel)
-
-        cv.imshow(window_name, dst)
-        c = cv.waitKey(0)
-        if c == 27:
-            break
-        ind += 1
-    return 0
-
+    return res, tipo
