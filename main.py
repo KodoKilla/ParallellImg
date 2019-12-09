@@ -12,7 +12,7 @@ import FilterLinear
 comm = MPI.COMM_WORLD
 
 imgsrc = "C:\\Users\\Kodo\\PycharmProjects\\ProcImg\\john_lennon_capa_widelg.jpeg"
-if(comm.Get_rank() == 2 or comm.Get_rank() == 3):
+if(comm.Get_rank() != 0 and comm.Get_rank() != 0):
     imgsrc = "C:\\Users\\Kodo\\PycharmProjects\\ProcImg\\ruido.jpg"
 
 print("Processo %d de %d" % (comm.Get_rank(), comm.Get_size()))

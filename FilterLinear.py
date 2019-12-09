@@ -21,8 +21,8 @@ def main(imgsrc, nProcesso):
         res = cv2.GaussianBlur(img, (5, 5), 0)
         tfim = time.time() - tini
         print("Tempo de Processamento: ", tfim)
-    if (nProcesso == 3):
-        tipo = "Média"
+    if (nProcesso > 2):
+        tipo = "Processo " + str(nProcesso)
         res = cv2.medianBlur(img, 5)
         tfim = time.time() - tini
         print("Tempo de Processamento: ", tfim)
